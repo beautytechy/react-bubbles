@@ -1,25 +1,26 @@
-import React, {useState} from "react";
-import axiosWithAuth from "../utils/axiosWithAuth";
+import React, { useState } from "react";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 const Login = (props) => {
-  const [creds, setCreds] = useState({username: "", password:""});
- 
+  const [creds, setCreds] = useState({ username: "", password: "" });
+
   const handleChange = e => {
-   setCreds ({
-     ...creds,
-     [e.target.name]: e.target.value,
-   })
- }
-   const login = e => {
-     e.preventDefault();
-     axiosWithAuth().post('http://localhost:5000/api/login', creds)
-       .then(res => {
-         console.log("login response", res)
-         localStorage.setItem('token', res.data.payload);
-         props.history.push('/protected');
-       })
-   }
- 
+    setCreds({
+      ...creds,
+      [e.target.name]: e.target.value,
+    })
+  }
+  const login = e => {
+    e.preventDefault();
+    axiosWithAuth()
+      .post('api/login', creds)
+      .then(res => {
+        console.log("login response", res)
+        localStorage.setItem('token', res.data.payload);
+        props.history.push('/protected');
+      })
+  }
+
   // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
   return (
